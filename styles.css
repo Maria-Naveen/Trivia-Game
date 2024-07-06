@@ -5,6 +5,11 @@
 }
 
 .header {
+  /* max-width: 100%; */
+  /* width: auto; */
+  font-weight: bold;
+  font-size: large;
+  /* text-align: center; */
   display: flex;
   padding: 1rem;
   justify-content: center;
@@ -98,4 +103,13 @@
 
 #submitAnswerBtn:hover {
   color: black;
+}
+
+@media (max-width: 500px) {
+  .userDetails,
+  .categories,
+  .questionSection,
+  .winnerSection {
+    width: 300px;
+  }
 }

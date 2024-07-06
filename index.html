@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="index.js" defer></script>
+    <title>Trivia-Game</title>
+  </head>
+  <body>
+    <h2 class="header">Trivia-Game</h2>
+    <div class="userDetails">
+      <label for="player1">Player1:</label>
+      <input
+        type="text"
+        name="player1"
+        id="player1"
+        placeholder="Enter your name..."
+      />
+      <label for="player2">Player2:</label>
+      <input
+        type="text"
+        name="player2"
+        id="player2"
+        placeholder="Enter your name..."
+      />
+      <button class="startbtn" onclick="startGame()">Start game</button>
+    </div>
+    <div class="categories hidden">
+      <label for="category">Choose a category:</label>
+      <select name="category" id="category">
+        <option value="music">Music</option>
+        <option value="science">Science</option>
+        <option value="history">History</option>
+        <option value="geography">Geography</option>
+        <option value="entertainment">Entertainment</option>
+      </select>
+      <button class="selectBtn" onclick="selectCategory()">
+        Select Category
+      </button>
+    </div>
+    <div class="questionSection hidden">
+      <p class="current-player">Player 1's turn</p>
+      <p id="question-text">Loading...</p>
+      <input
+        type="text"
+        id="player-answer"
+        placeholder="Enter your answer..."
+      />
+      <p id="feedback"></p>
+      <button onclick="submitAnswer()" id="submitAnswerBtn">
+        Submit answer
+      </button>
+    </div>
+    <div class="winnerSection hidden">
+      <div id="final-scores"></div>
+      <div id="winner"></div>
+    </div>
+  </body>
+</html>

@@ -2,7 +2,7 @@ let player1, player2;
 let currentPlayer = 1;
 let questions = [];
 let currentQuestion;
-let chosenCategories = new Set(); // Track chosen categories
+let chosenCategories = new Set();
 let scores = { player1: 0, player2: 0 };
 
 function startGame() {
@@ -22,7 +22,7 @@ function updateCategoryOptions() {
   const options = categorySelect.options;
   for (let i = 0; i < options.length; i++) {
     if (chosenCategories.has(options[i].value)) {
-      options[i].disabled = true; // Disable already chosen categories
+      options[i].disabled = true;
     } else {
       options[i].disabled = false;
     }
@@ -60,16 +60,19 @@ async function fetchAndFilterQuestions(category) {
         easyQuestions.push({
           question: item.question.text,
           answer: item.correctAnswer,
+          difficulty: "easy",
         });
       } else if (mediumQuestions.length < 2 && item.difficulty === "medium") {
         mediumQuestions.push({
           question: item.question.text,
           answer: item.correctAnswer,
+          difficulty: "medium",
         });
       } else if (hardQuestions.length < 2 && item.difficulty === "hard") {
         hardQuestions.push({
           question: item.question.text,
           answer: item.correctAnswer,
+          difficulty: "hard",
         });
       }
 
@@ -131,9 +134,9 @@ function submitAnswer() {
     feedback.textContent = `Incorrect! The correct answer was: ${currentQuestion.answer}`;
   }
 
-  currentPlayer = currentPlayer === 1 ? 2 : 1; // Switch player
+  currentPlayer = currentPlayer === 1 ? 2 : 1;
 
-  document.getElementById("player-answer").value = ""; // Clear input
+  document.getElementById("player-answer").value = "";
   displayQuestion();
 }
 
@@ -174,9 +177,9 @@ function displayFinalScores() {
   const winnerDiv = document.getElementById("winner");
 
   finalScoresDiv.innerHTML = `
-    <p>${player1}: ${scores.player1}</p>
-    <p>${player2}: ${scores.player2}</p>
-  `;
+        <p>${player1}: ${scores.player1}</p>
+        <p>${player2}: ${scores.player2}</p>
+    `;
 
   winnerDiv.textContent = `Winner: ${winner}`;
 

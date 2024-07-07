@@ -90,7 +90,30 @@
   padding: 0.45em;
 }
 
-#submitAnswerBtn {
+#answer-options {
+  display: flex;
+  flex-direction: column;
+  gap: 1em; /* Adds spacing between buttons */
+  margin: 1em 0;
+}
+
+#answer-options button {
+  background-color: #f7ca18;
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
+  color: white;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+#answer-options button:hover {
+  background-color: #d4a017; /* Slightly darker yellow for hover effect */
+  color: black;
+}
+
+#nextQuestionBtn {
   width: 65%;
   margin: 0 auto;
   padding: 10px;
@@ -101,7 +124,7 @@
   color: white;
 }
 
-#submitAnswerBtn:hover {
+#nextQuestionBtn:hover {
   color: black;
 }
 

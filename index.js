@@ -50,7 +50,7 @@ async function fetchAndFilterQuestions(category) {
   try {
     const response = await fetch(url);
     const data = await response.json();
-
+    console.log(data);
     let easyQuestions = [];
     let mediumQuestions = [];
     let hardQuestions = [];
@@ -60,18 +60,21 @@ async function fetchAndFilterQuestions(category) {
         easyQuestions.push({
           question: item.question.text,
           answer: item.correctAnswer,
+          incorrectAnswers: item.incorrectAnswers,
           difficulty: "easy",
         });
       } else if (mediumQuestions.length < 2 && item.difficulty === "medium") {
         mediumQuestions.push({
           question: item.question.text,
           answer: item.correctAnswer,
+          incorrectAnswers: item.incorrectAnswers,
           difficulty: "medium",
         });
       } else if (hardQuestions.length < 2 && item.difficulty === "hard") {
         hardQuestions.push({
           question: item.question.text,
           answer: item.correctAnswer,
+          incorrectAnswers: item.incorrectAnswers,
           difficulty: "hard",
         });
       }
@@ -90,6 +93,7 @@ async function fetchAndFilterQuestions(category) {
       ...mediumQuestions,
       ...hardQuestions,
     ];
+    console.log(allQuestions);
 
     if (allQuestions.length === 6) {
       return allQuestions;
@@ -116,17 +120,37 @@ function displayQuestion() {
   console.log(currentQuestion);
   document.querySelector("#question-text").textContent =
     currentQuestion.question;
+
+  const currentPlayerName = currentPlayer === 1 ? player1 : player2;
   document.querySelector(
     ".current-player"
-  ).textContent = `Player ${currentPlayer}'s turn`;
+  ).textContent = `${currentPlayerName}'s turn`;
+
+  const allAnswers = [
+    currentQuestion.answer,
+    ...currentQuestion.incorrectAnswers,
+  ];
+  const shuffledAnswers = allAnswers.sort(() => Math.random() - 0.5);
+
+  const answerOptionsDiv = document.getElementById("answer-options");
+  answerOptionsDiv.innerHTML = "";
+  shuffledAnswers.forEach((answer) => {
+    const button = document.createElement("button");
+    button.textContent = answer;
+    button.onclick = () => submitAnswer(answer);
+    button.classList.add("answer-option");
+    answerOptionsDiv.appendChild(button);
+  });
+
+  document.getElementById("feedback").textContent = "";
+
+  document.getElementById("nextQuestionBtn").classList.add("hidden");
 }
 
-function submitAnswer() {
-  const playerAnswer = document.getElementById("player-answer").value;
-
+function submitAnswer(selectedAnswer) {
   const feedback = document.getElementById("feedback");
   if (
-    playerAnswer.trim().toLowerCase() === currentQuestion.answer.toLowerCase()
+    selectedAnswer.trim().toLowerCase() === currentQuestion.answer.toLowerCase()
   ) {
     feedback.textContent = "Correct!";
     updateScore(currentPlayer, currentQuestion.difficulty);
@@ -134,9 +158,11 @@ function submitAnswer() {
     feedback.textContent = `Incorrect! The correct answer was: ${currentQuestion.answer}`;
   }
 
-  currentPlayer = currentPlayer === 1 ? 2 : 1;
+  document.getElementById("nextQuestionBtn").classList.remove("hidden");
+}
 
-  document.getElementById("player-answer").value = "";
+function nextQuestion() {
+  currentPlayer = currentPlayer === 1 ? 2 : 1;
   displayQuestion();
 }
 
@@ -177,8 +203,8 @@ function displayFinalScores() {
   const winnerDiv = document.getElementById("winner");
 
   finalScoresDiv.innerHTML = `
-        <p>${player1}: ${scores.player1}</p>
-        <p>${player2}: ${scores.player2}</p>
+        <p>${player1}'s score: ${scores.player1}</p>
+        <p>${player2}'s score: ${scores.player2}</p>
     `;
 
   winnerDiv.textContent = `Winner: ${winner}`;

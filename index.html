@@ -42,14 +42,10 @@
     <div class="questionSection hidden">
       <p class="current-player">Player 1's turn</p>
       <p id="question-text">Loading...</p>
-      <input
-        type="text"
-        id="player-answer"
-        placeholder="Enter your answer..."
-      />
+      <div id="answer-options"></div>
       <p id="feedback"></p>
-      <button onclick="submitAnswer()" id="submitAnswerBtn">
-        Submit answer
+      <button id="nextQuestionBtn" onclick="nextQuestion()" class="hidden">
+        Next
       </button>
     </div>
     <div class="winnerSection hidden">

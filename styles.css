@@ -127,6 +127,9 @@
   color: black;
 }
 
+#feedback {
+  text-align: center;
+}
 /*styling final scores and winner*/
 #final-scores {
   text-align: center;
